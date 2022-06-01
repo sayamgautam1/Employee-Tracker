@@ -114,9 +114,11 @@ function viewRole() {
   });
 }
 
-// add array to save all the employee names and id
+// add array to save all the employee names and id, roles and departments
 
 let employeeListArray = [];
+let employeeRolesArray = [];
+let departmentArray = [];
 // function to save all the employee inside the array
 
 function employeeList() {
@@ -131,8 +133,26 @@ function employeeList() {
   });
 }
 
+// function to save all the roles of the db inside an array
+
+function employeeRoles() {
+  db.query("SELECT * FROM role", function (err, res) {
+    if (err) throw err;
+    res.forEach((role) => {
+      employeeRolesArray.push(`${role.id}-${role.title}`);
+    });
+    console.log(employeeRolesArray);
+  });
+}
+
 // function to add employee
 
 function addEmployee() {
   employeeList();
+}
+
+// function to add roles
+
+function addRole() {
+  employeeRoles();
 }
