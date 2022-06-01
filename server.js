@@ -129,7 +129,7 @@ function employeeList() {
         `${employee.id}-${employee.first_name} ${employee.last_name}`
       );
     });
-    console.log(employeeListArray);
+    // console.log(employeeListArray);
   });
 }
 
@@ -141,7 +141,7 @@ function employeeRoles() {
     res.forEach((role) => {
       employeeRolesArray.push(`${role.id}-${role.title}`);
     });
-    console.log(employeeRolesArray);
+    // console.log(employeeRolesArray);
   });
 }
 
@@ -153,14 +153,55 @@ function employeeDepartments() {
     res.forEach((department) => {
       departmentArray.push(`${department.id}-${department.name}`);
     });
-    console.log(departmentArray);
+    // console.log(departmentArray);
   });
 }
 
 // function to add employee
 
 function addEmployee() {
+  // upadte the array everytime the function is called
+  employeeRoles();
   employeeList();
+
+  inquier
+    .prompt([
+      {
+        name: "firstname",
+        type: "input",
+        message: "What is the employee's first name?",
+      },
+      {
+        name: "lastname",
+        type: "input",
+        message: "What is the employee's last name?",
+      },
+      {
+        name: "role",
+        type: "list",
+        message: "What is the employee's role?",
+        choices: employeeRolesArray,
+      },
+
+      {
+        name: "reportingTo",
+        type: "list",
+        message: "Who is the employee's manager?",
+        choices: employeeListArray,
+      },
+    ])
+    .then(function (newEmployee) {
+      let newEmployeeRoleId = newEmployee.role.split("-");
+      let newEmployeeManagerId = newEmployee.reportingTo.split("-");
+      let sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+      VALUES ('${newEmployee.firstname}','${newEmployee.lastname}','${newEmployeeRoleId[0]}','${newEmployeeManagerId[0]}')`;
+      db.query(sql, (err, res) => {
+        if (err) throw err;
+        console.log(`${newEmployee.firstname} ${newEmployee.lastname} added`);
+      });
+
+      runPrompt();
+    });
 }
 
 // function to add roles
@@ -169,7 +210,7 @@ function addRole() {
   employeeRoles();
 }
 
-// functoin to add department
+// function to add department
 
 function addDepartment() {
   employeeDepartments();
