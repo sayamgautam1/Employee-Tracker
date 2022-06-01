@@ -207,7 +207,42 @@ function addEmployee() {
 // function to add roles
 
 function addRole() {
+  // update the array of all the employee, roles and departments
   employeeRoles();
+  employeeList();
+  employeeDepartments();
+
+  inquier
+    .prompt([
+      {
+        name: "role",
+        type: "input",
+        message: "Enter the role you would like to add:",
+      },
+
+      {
+        name: "department",
+        type: "list",
+        message: "In what department would you like to add this role?",
+        choices: departmentArray,
+      },
+
+      {
+        name: "salary",
+        type: "number",
+        message: "Enter the role's salary:",
+      },
+    ])
+    .then((newRole) => {
+      let newRoleId = newRole.department.split("-");
+      let sql = `INSERT INTO role (title, salary, department_id)
+      VALUES ('${newRole.role}','${newRole.salary}','${newRoleId[0]}')`;
+      db.query(sql, (err, res) => {
+        if (err) throw err;
+        console.log(`${newRole.role} added!!`);
+      });
+      runPrompt();
+    });
 }
 
 // function to add department
