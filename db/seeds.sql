@@ -16,11 +16,11 @@ VALUES ("software engineer", 120000, 1),
     ("sales rep", 85000, 4);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Jurgen", "Klopp", 1, 1 ),
+VALUES ("Jurgen", "Klopp", 1, null ),
        ("Jordan", "Henderson", 2, 1),
-       ("Virgil", "Van Dyke", 3, 14),
+       ("Virgil", "Van Dyke", 3, 2),
        ("Allison", "Becker", 4, 3),
-       ("Mohamed", "Salah", 5, 14),
-       ("Sadio", "Mane", 6, 5),
-       ("Diego", "Jota", 7, 14),
-       ("Roberto", "Firmino", 8, 7);
+       ("Mohamed", "Salah", 5, 1),
+       ("Sadio", "Mane", 6, 2),
+       ("Diego", "Jota", 7, 1),
+       ("Roberto", "Firmino", 8, 3);
