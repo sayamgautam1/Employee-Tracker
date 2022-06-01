@@ -48,7 +48,7 @@ function runPrompt() {
       } else if (selection.action === "View Department") {
         viewDepartment();
       } else if (selection.action === "View role") {
-        viewrole();
+        viewRole();
       } else if (selection.action === "Add Employee") {
         addEmployee();
       } else if (selection.action === "Add Department") {
@@ -78,6 +78,20 @@ function viewAll() {
 
 function viewDepartment() {
   const sql = "SELECT * FROM department";
+  db.query(sql, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    // run prompt again to start the application from the begining
+    runPrompt();
+  });
+}
+
+// function to view all roles
+
+function viewRole() {
+  const sql = `SELECT role.id, role.title, role.salary , department.name AS department
+  FROM role
+  INNER JOIN department ON department.id=role.department_id`;
   db.query(sql, (err, res) => {
     if (err) throw err;
     console.table(res);
