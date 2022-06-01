@@ -248,5 +248,25 @@ function addRole() {
 // function to add department
 
 function addDepartment() {
+  employeeRoles();
+  employeeList();
   employeeDepartments();
+
+  inquier
+    .prompt([
+      {
+        name: "department",
+        type: "input",
+        message: "Enter the department you would like to add:",
+      },
+    ])
+    .then((newDepartment) => {
+      let sql = `INSERT INTO department (name)
+    VALUES ('${newDepartment.department}')`;
+      db.query(sql, (err, res) => {
+        if (err) throw err;
+        console.log(`new department ${newDepartment.department} added`);
+        runPrompt();
+      });
+    });
 }
