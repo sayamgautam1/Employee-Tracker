@@ -113,3 +113,26 @@ function viewRole() {
     runPrompt();
   });
 }
+
+// add array to save all the employee names and id
+
+let employeeListArray = [];
+// function to save all the employee inside the array
+
+function employeeList() {
+  db.query("SELECT * FROM employee", function (err, res) {
+    if (err) throw err;
+    res.forEach((employee) => {
+      employeeListArray.push(
+        `${employee.id}-${employee.first_name} ${employee.last_name}`
+      );
+    });
+    console.log(employeeListArray);
+  });
+}
+
+// function to add employee
+
+function addEmployee() {
+  employeeList();
+}
