@@ -65,7 +65,21 @@ function runPrompt() {
 
 // function to view all employess
 function viewAll() {
-  const sql = `SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.title, role.salary, role.id, department.id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id`;
+  const sql = `SELECT employee.id,
+  employee.first_name,
+  employee.last_name,
+  role.title,
+  department.name AS department,
+  role.salary,
+  CONCAT(e.first_name," ",e.last_name) AS manager
+  FROM employee
+  INNER JOIN role
+  ON employee.role_id = role.id
+  INNER JOIN department
+  ON role.department_id = department.id
+  INNER JOIN employee e
+  ON employee.manager_id = e.id
+  ORDER BY employee.id;`;
   db.query(sql, (err, res) => {
     if (err) throw err;
     console.table(res);
