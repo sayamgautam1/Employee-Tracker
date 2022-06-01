@@ -145,6 +145,18 @@ function employeeRoles() {
   });
 }
 
+// function to save all the departments of the db inside an array
+
+function employeeDepartments() {
+  db.query("SELECT * FROM department", function (err, res) {
+    if (err) throw err;
+    res.forEach((department) => {
+      departmentArray.push(`${department.id}-${department.name}`);
+    });
+    console.log(departmentArray);
+  });
+}
+
 // function to add employee
 
 function addEmployee() {
@@ -155,4 +167,10 @@ function addEmployee() {
 
 function addRole() {
   employeeRoles();
+}
+
+// functoin to add department
+
+function addDepartment() {
+  employeeDepartments();
 }
