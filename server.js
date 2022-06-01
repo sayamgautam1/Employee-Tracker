@@ -69,6 +69,19 @@ function viewAll() {
   db.query(sql, (err, res) => {
     if (err) throw err;
     console.table(res);
+    // run prompt again to start the application from the begining
+    runPrompt();
+  });
+}
+
+// function to view departments
+
+function viewDepartment() {
+  const sql = "SELECT * FROM department";
+  db.query(sql, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    // run prompt again to start the application from the begining
     runPrompt();
   });
 }
