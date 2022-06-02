@@ -4,6 +4,8 @@
  ## Description
  A command-line application for managing a company's employees using node, inquirer, and MySQL.
 
+[live Demo](https://youtu.be/jSREI-nb_LY)
+
 # User Story
 
 ```
