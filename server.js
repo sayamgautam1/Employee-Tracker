@@ -270,3 +270,59 @@ function addDepartment() {
       });
     });
 }
+
+// function to update roles of any given employes
+
+function updateRole() {
+  // set and empty array for roles and employee such that it is saved as an object or arrays
+  let employeeArray = [];
+  let rolesArray = [];
+
+  // get all the employee inside employeeArray
+  let sql = `SELECT * FROM employee`;
+  db.query(sql, (err, res) => {
+    if (err) throw err;
+    res.forEach((employee) => {
+      employeeArray.push({
+        name: `${employee.first_name} ${employee.last_name}`,
+        value: employee.id,
+      });
+      // console.log(employeeArray);
+    });
+    //get all the roles of the saved employee
+    // since it is ascynconos second query to be runned inside the first
+
+    let sql2 = `select role.id, role.title, role.salary, department.name from role inner JOIN department on role.department_id = department.id`;
+
+    db.query(sql2, (err, res) => {
+      if (err) throw err;
+      res.forEach((role) => {
+        rolesArray.push({
+          name: role.title,
+          value: role.id,
+        });
+      });
+    });
+
+    // set an inquierer to ask which employee and role that needs to be updated, both the async query will be run and thus upadate to the latest employee and roles array
+
+    inquier
+      .prompt([
+        {
+          type: "list",
+          name: "updateEmployee",
+          message: "Which employee would you like to update?",
+          choices: employeeArray,
+        },
+        {
+          type: "list",
+          name: "updateRole",
+          message: "Which role would you like to assign?",
+          choices: rolesArray,
+        },
+      ])
+      .then((selection) => {
+        console.log(selection);
+      });
+  });
+}
