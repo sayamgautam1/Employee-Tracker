@@ -322,7 +322,26 @@ function updateRole() {
         },
       ])
       .then((selection) => {
-        console.log(selection);
+        let updateSql = `UPDATE employee SET ? WHERE ?`;
+        // console.log(selection);
+        db.query(
+          updateSql,
+          [
+            {
+              role_id: selection.updateRole,
+            },
+            {
+              id: selection.updateEmployee,
+            },
+          ],
+          (err, res) => {
+            if (err) throw err;
+
+            console.log(res);
+
+            runPrompt();
+          }
+        );
       });
   });
 }
